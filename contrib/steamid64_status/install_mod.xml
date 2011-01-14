@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+	<header>
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[Steamid64 status]]></title>
+		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a image under their avatar (stating if there online/offline or what game their playing) on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
+		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
+This mod is based on RMcGirr83's xfire mod.
+Thank syntax_error for the steam image and RMcGirr83 for all the help.]]></author-notes>
+		<author-group>
+			<author>
+				<username><![CDATA[keitzy]]></username>
+				<homepage><![CDATA[http://www.ausgamingcore.com/]]></homepage>
+			</author>
+			<author>
+				<realname><![CDATA[Tyler]]></realname>
+				<username><![CDATA[bprsk8r4272]]></username>
+				<homepage><![CDATA[http://gotskillslounge.com]]></homepage>
+				<email><![CDATA[prosk8er@gotskillslounge.com]]></email>
+			</author>
+		</author-group>
+		<mod-version>1.0.0</mod-version>
+		<installation>
+			<level>easy</level>
+			<time>900</time>
+			<target-version>3.0.8</target-version>
+		</installation>
+		<history>
+			<entry>
+				<date>2011-01-10</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Initial Release]]></change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+	<action-group>
+		<copy>
+			<file from="contrib/steamid64_status/root/styles/prosilver/imageset/icon_contact_steam_profile.gif" to="styles/prosilver/imageset/icon_contact_steam_profile.gif"/>
+		</copy>
+		<open src="viewtopic.php">
+			<edit>
+				<comment lang="en"><![CDATA[add steam profile icon]]></comment>
+				<find><![CDATA[	'WWW_IMG' 			=> $user->img('icon_contact_www', 'VISIT_WEBSITE'),]]></find>
+				<action type="after-add"><![CDATA[	'STEAM_PROFILE_IMG' 		=> $user->img('icon_contact_steam_proflie', 'VISIT_STEAM_PROFILE'),]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[				'steam'			=> ($row['user_steam'] && $auth->acl_get('u_sendim'))  ? $row['user_steam'] : '',]]></find>
+				<action type="replace-with"><![CDATA[				'steam'			=> $row['user_steam'],]]></action>
+			</edit>
+			<edit>
+				<comment lang="en"><![CDATA[ask if user has a steamid64 in the post and if has get steam xml data and load the file]]></comment>
+				<find><![CDATA[	$delete_allowed = ($user->data['is_registered'] && ($auth->acl_get('m_delete', $forum_id) || (
+		$user->data['user_id'] == $poster_id &&
+		$auth->acl_get('f_delete', $forum_id) &&
+		$topic_data['topic_last_post_id'] == $row['post_id'] &&
+		($row['post_time'] > time() - ($config['delete_time'] * 60) || !$config['delete_time']) &&
+		// we do not want to allow removal of the last post if a moderator locked it!
+		!$row['post_edit_locked']
+	)));]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+    if ($user_cache[$poster_id]['steam'] > 0)
+    {
+    $steamxml = simplexml_load_file('http://steamcommunity.com/profiles/' . $user_cache[$poster_id]['steam'] . '?xml=1');
+    $steam_state = $steamxml->onlineState;
+    $steam_state_msg = $steamxml->stateMessage;    
+    }
+    else 
+    {
+    $steam_state = ' ';
+    $steam_state_msg = ' ';
+    }
+// END steam mod]]></action>
+			</edit>
+			<edit>
+				<comment lang="en"><![CDATA[ask if user had post steamid and get data from loaded xml file from steam to be ready for echo in template file]]></comment>
+				<find><![CDATA[// BEGIN steam mod
+		'U_STEAM'		=> $user_cache[$poster_id]['steam'],
+		'STEAM_IS_INT'  => (!empty($user_cache[$poster_id]['steam']) && is_numeric($user_cache[$poster_id]['steam'])) ? true : false,
+// END steam mod]]></find>
+				<action type="replace-with"><![CDATA[// BEGIN steam mod
+		'U_STEAM'		        => $user_cache[$poster_id]['steam'],
+		'U_STEAM_PROFILE'		=> 'http://www.steamcommunity.com/profiles/ ' . $user_cache[$poster_id]['steam'],
+		'STEAM_STATE'       => $steam_state,
+		'STEAM_STATE_MSG'   => $steam_state_msg,
+// END steam mod]]></action>
+			</edit>
+		</open>
+		<open src="includes/ucp/ucp_profile.php">
+			<edit>
+				<find><![CDATA[class ucp_profile]]></find>
+				<action type="before-add"><![CDATA[// Begin steam mod
+class ucp_steam
+{
+
+	const STEAM_LOGIN = 'https://steamcommunity.com/openid/login';
+
+	/**
+	* Get the URL to sign into steam
+	*
+	* @param mixed returnTo URI to tell steam where to return, MUST BE THE FULL URI WITH THE PROTOCOL
+	* @param bool useAmp Use &amp; in the URL, true; or just &, false. 
+	* @return string The string to go in the URL
+	*/	
+	public static function genUrl($returnTo = false, $useAmp = true)
+	{
+		$returnTo = (!$returnTo) ? (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] : $returnTo;
+		
+		$params = array(
+			'openid.ns'			=> 'http://specs.openid.net/auth/2.0',
+			'openid.mode'		=> 'checkid_setup',
+			'openid.return_to'	=> $returnTo,
+			'openid.realm'		=> (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+			'openid.identity'	=> 'http://specs.openid.net/auth/2.0/identifier_select',
+			'openid.claimed_id'	=> 'http://specs.openid.net/auth/2.0/identifier_select',
+		);
+		
+		$sep = ($useAmp) ? '&amp;' : '&';
+		return self::STEAM_LOGIN . '?' . http_build_query($params, '', $sep);
+	}
+	
+	/**
+	* Validate the incoming data
+	*
+	* @return string Returns the SteamID64 if successful or empty string on failure
+	*/
+	public static function validate()
+	{
+		// Star off with some basic params
+		$params = array(
+			'openid.assoc_handle'	=> $_GET['openid_assoc_handle'],
+			'openid.signed'			=> $_GET['openid_signed'],
+			'openid.sig'			=> $_GET['openid_sig'],
+			'openid.ns'				=> 'http://specs.openid.net/auth/2.0',
+		);
+		
+		// Get all the params that were sent back and resend them for validation
+		$signed = explode(',', $_GET['openid_signed']);
+		foreach($signed as $item)
+		{
+			$val = $_GET['openid_' . str_replace('.', '_', $item)];
+			$params['openid.' . $item] = get_magic_quotes_gpc() ? stripslashes($val) : $val; 
+		}
+
+		// Finally, add the all important mode. 
+		$params['openid.mode'] = 'check_authentication';
+		
+		// Stored to send a Content-Length header
+		$data =  http_build_query($params);
+		$context = stream_context_create(array(
+			'http' => array(
+				'method'  => 'POST',
+				'header'  => 
+					"Accept-language: en\r\n".
+					"Content-type: application/x-www-form-urlencoded\r\n" .
+					"Content-Length: " . strlen($data) . "\r\n",
+				'content' => $data,
+			),
+		));
+
+		$result = file_get_contents(self::STEAM_LOGIN, false, $context);
+		
+		// Validate wheather it's true and if we have a good ID
+		preg_match("#^http://steamcommunity.com/openid/id/([0-9]{17,25})#", $_GET['openid_claimed_id'], $matches);
+		$steamID64 = is_numeric($matches[1]) ? $matches[1] : 0;
+
+		// Return our final value
+		return preg_match("#is_valid\s*:\s*true#i", $result) == 1 ? $steamID64 : '';
+	}
+}
+
+// END steam mod
+]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		$s_hidden_fields = '';]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+		$steamerror = false;
+		$action = request_var('action', '');
+
+    if($user->data['user_steam'] > 0)
+		{
+			if($action == 'unlink')
+			{
+				$sql = 'UPDATE ' . USERS_TABLE . "
+					SET user_steam = 0
+					WHERE user_id = {$user->data['user_id']}";
+				$db->sql_query($sql);
+				
+				trigger_error('Your Steam Account has been unlinked successfully.<br /><br /><a href="' . append_sid($this->u_action) . '">Return to the User Control Panel</a>');
+			}
+			
+			$template->assign_vars(array(
+				'U_UNLINK_STEAM'	=> append_sid($this->u_action . '&amp;action=unlink'),
+			));
+		}
+		else
+		{
+			if(isset($_GET['openid_mode']))
+			{
+				$steamID64 = ucp_steam::validate();
+				
+				if(!empty($steamID64))
+				{
+					$steamID64 = $db->sql_escape($steamID64);
+					$sql = 'UPDATE ' . USERS_TABLE . "
+						SET user_steam = $steamID64
+						WHERE user_id = {$user->data['user_id']}";
+					$db->sql_query($sql);
+					
+					trigger_error('Your Steam Account has been linked successfully.<br /><br /><a href="' . append_sid($this->u_action) . '">Return to Profile Edit</a>');
+				}
+				
+				$error = 'There was an error with Authentication. Either the operation was canceled or the credentials were invalid.';
+			}
+			
+			$template->assign_vars(array(
+				'ERROR'            => $steamerror,
+				'U_STEAM_SIGNIN'	=> ucp_steam::genUrl(append_sid(generate_board_url() . '/ucp.php', 'i=' . $id . '&amp;mode=' . $mode)),
+			));
+		}
+// END steam mod]]></action>
+			</edit>
+		</open>
+		<open src="language/en/viewtopic.php">
+			<edit>
+				<find><![CDATA[	'VISIT_WEBSITE'			=> 'WWW',]]></find>
+				<action type="after-add"><![CDATA[	'VISIT_STEAM_PROFILE'			=> 'View Steam Profile',]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/ucp_profile_profile_info.html">
+			<edit>
+				<find><![CDATA[	<dl>
+		<dt><label for="steam">{L_STEAM}:</label><br /><span>{STEAM_EXPLAIN}</span></dt>
+		<dd><input type="text" name="steam" id="steam" maxlength="255" value="{STEAM}" class="inputbox" /></dd>
+	</dl>]]></find>
+				<action type="replace-with"><![CDATA[	<dl>
+		<dt><label for="steam">{L_STEAM}:</label></span></dt>
+		<dd><!-- IF U_STEAM_SIGNIN --><!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF --><br /><a href="{U_STEAM_SIGNIN}" /><img src="http://steamcommunity.com/public/images/signinthroughsteam/sits_small.png" border="0" /></a>	<!-- ELSE --><input type="text" name="steam" id="steam" maxlength="255" value="{STEAM}" class="inputbox" />	<!-- ENDIF --></dd>
+	</dl>]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/viewtopic_body.html">
+			<edit>
+				<find><![CDATA[			<!-- IF postrow.U_STEAM --><br /><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/simple/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></find>
+				<action type="replace-with"><![CDATA[			<!-- IF postrow.U_STEAM --><dd><label for="steam">{L_STEAM}:</label><span class="steam_{postrow.STEAM_STATE}">{postrow.STEAM_STATE_MSG}</span></dd><!-- ENDIF -->]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ 		<!-- IF postrow.U_PM or postrow.U_EMAIL or postrow.U_WWW or postrow.U_MSN or postrow.U_ICQ or postrow.U_YIM or postrow.U_AIM or postrow.U_JABBER -->]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[or postrow.U_JABBER]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ or postrow.U_STEAM]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[ 					<!-- IF postrow.U_JABBER --><li class="jabber-icon"><a href="{postrow.U_JABBER}" onclick="popup(this.href, 550, 320); return false;" title="{L_JABBER}"><span>{L_JABBER}</span></a></li><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[					<!-- IF postrow.U_STEAM --><li class="steam_profile-icon"><a href="http://www.steamcommunity.com/profiles/{postrow.U_STEAM}" title="{L_VISIT_STEAM_PROFILE}" target="_blank"><span>{L_VISIT_STEAM_PROFILE}</span></a></li><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/buttons.css">
+			<edit>
+				<find><![CDATA[.web-icon, .web-icon a			{ background: none top left no-repeat; }]]></find>
+				<action type="after-add"><![CDATA[.steam_profile-icon, .steam_profile-icon a		{ background: none top left no-repeat; }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ul.profile-icons li.web-icon	{ width: {IMG_ICON_CONTACT_WWW_WIDTH}px; height: {IMG_ICON_CONTACT_WWW_HEIGHT}px; }]]></find>
+				<action type="after-add"><![CDATA[ul.profile-icons li.steam_profile-icon	{ width: 20px; height: 20px; }]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/colours.css">
+			<edit>
+				<find><![CDATA[/* Miscellaneous styles
+---------------------------------------- */]]></find>
+				<action type="after-add"><![CDATA[.steam_online {
+  color: #62A7E3;
+  }
+
+.steam_offline {
+  color:#898989;
+}
+
+.steam_in-game {
+  color:#8BC53F;
+}
+
+.steam_online_border {
+  border: solid 2px #62A7E3;
+  color: #62A7E3;
+  }
+  
+.steam_offline_border {
+  border: solid 2px #62A7E3;
+  color: #898989;
+  }
+  
+.steam_in-game_border {
+  border: solid 2px #62A7E3;
+  color: #8BC53F;
+  }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[.web-icon, .web-icon a			{ background-image: url("{IMG_ICON_CONTACT_WWW_SRC}"); }]]></find>
+				<action type="after-add"><![CDATA[.steam_profile-icon, .steam_profile-icon a			{ background-image: url("{T_IMAGESET_PATH}/icon_contact_steam_profile.gif"); }]]></action>
+			</edit>
+		</open>
+		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
+	</action-group>
+</mod>
