@@ -206,7 +206,7 @@ $user->add_lang('mods/steam');
 		<open src="styles/prosilver/template/viewtopic_body.html">
 			<edit>
 				<find><![CDATA[			<!-- IF postrow.RANK_TITLE or postrow.RANK_IMG --><dd>{postrow.RANK_TITLE}<!-- IF postrow.RANK_TITLE and postrow.RANK_IMG --><br /><!-- ENDIF -->{postrow.RANK_IMG}</dd><!-- ENDIF -->]]></find>
-				<action type="after-add"><![CDATA[			<!-- IF postrow.U_STEAM --><br /><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/simple/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></action>
+				<action type="after-add"><![CDATA[			<!-- IF postrow.U_STEAM --><br /><dd><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/theme/colours.css">

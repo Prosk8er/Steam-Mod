@@ -73,7 +73,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</tr>
 			<!-- ENDIF -->
 				</table>]]></find>
-				<action type="after-add"><![CDATA[			<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><br />&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/simple/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></action>
+				<action type="after-add"><![CDATA[			<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><br />&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>

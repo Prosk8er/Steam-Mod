@@ -40,7 +40,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		</copy>
 		<open src="styles/prosilver/template/viewtopic_body.html">
 			<edit>
-				<remove><![CDATA[			<!-- IF postrow.U_STEAM --><br /><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/simple/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></remove>
+				<remove><![CDATA[			<!-- IF postrow.U_STEAM --><br /><dd><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></remove>
 				<find><![CDATA[<!-- IF postrow.U_MSN --><li class="msnm-icon">]]></find>
 				<action type="after-add"><![CDATA[                 <!-- IF postrow.U_STEAM --><li class="steam-icon"><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="./images/steam_mini.gif" style="height: 16px; width:16px; margin:2px;" alt="{L_STEAM}: {postrow.U_STEAM}" title="{L_STEAM}: {postrow.U_STEAM}" /></a></li><!-- ENDIF -->]]></action>
 			</edit>
@@ -53,7 +53,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		</open>
 		<open src="styles/subsilver2/template/viewtopic_body.html">
 			<edit>
-				<remove><![CDATA[			<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><br />&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/simple/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></remove>
+				<remove><![CDATA[			<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><br />&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></remove>
 				<find><![CDATA[<!-- IF postrow.U_EMAIL --><a href="{postrow.U_EMAIL}">{EMAIL_IMG}</a> <!-- ENDIF -->]]></find>
 				<inline-edit>
 					<inline-find><![CDATA[<!-- ENDIF -->]]></inline-find>
