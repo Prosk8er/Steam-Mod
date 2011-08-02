@@ -37,7 +37,6 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">subsilver2</link>
 			<link type="contrib" href="./contrib/small_icon_on_viewtopic/install_mod.xml" lang="en">Small Icon On Viewtopic</link>
 			<link type="contrib" href="./contrib/required_by_registration/install_mod.xml" lang="en">Required By Registration</link>
-			<link type="contrib" href="./contrib/steamid64_status/install_mod.xml" lang="en">Steamid64 status</link>
 		</link-group>
 	</header>
 	<action-group>
