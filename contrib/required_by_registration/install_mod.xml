@@ -33,6 +33,9 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="template" href="./subsilver2.xml" lang="en">subsilver2</link>
+		</link-group>
 	</header>
 	<action-group>
 		<open src="includes/ucp/ucp_register.php">
@@ -46,7 +49,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 			'username'			=> utf8_normalize_nfc(request_var('username', '', true)),
 			'new_password'		=> request_var('new_password', '', true),]]></find>
 				<action type="after-add"><![CDATA[// Steam Required For Registration
-         'steam'            => request_var('steam', '', true),
+			'steam'            => request_var('steam', '', true),
 // Steam Required For Registration]]></action>
 			</edit>
 			<edit>
@@ -56,7 +59,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 					array('email')),
 				'email_confirm'		=> array('string', false, 6, 60),]]></find>
 				<action type="after-add"><![CDATA[// Steam Required For Registration
-            'steam'            => array('string', false, 2, 60),
+				'steam'            => array('string', false, 2, 60),
 // Steam Required For Registration]]></action>
 			</edit>
 			<edit>
@@ -65,7 +68,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 					'user_password'			=> phpbb_hash($data['new_password']),
 					'user_email'			=> $data['email'],]]></find>
 				<action type="after-add"><![CDATA[// Steam Required For Registration
-               'user_steam'            => $data['steam'],
+					'user_steam'            => $data['steam'],
 // Steam Required For Registration]]></action>
 			</edit>
 			<edit>
@@ -75,8 +78,8 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 			'PASSWORD'			=> $data['new_password'],
 			'PASSWORD_CONFIRM'	=> $data['password_confirm'],]]></find>
 				<action type="after-add"><![CDATA[// Steam Required For Registration
-         'STEAM'            => $data['steam'],
-         'STEAM_EXPLAIN'      => sprintf($user->lang['STEAM_EXPLAIN'], '<a href="' . append_sid("{$phpbb_root_path}faq.$phpEx") . '">', '</a>'),
+			'STEAM'            => $data['steam'],
+			'STEAM_EXPLAIN'      => sprintf($user->lang['STEAM_EXPLAIN'], '<a href="' . append_sid("{$phpbb_root_path}faq.$phpEx") . '">', '</a>'),
 // Steam Required For Registration]]></action>
 			</edit>
 		</open>
@@ -90,18 +93,6 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
       <dt><label for="steam">{L_STEAM}:</label><br /><span>{STEAM_EXPLAIN}</span></dt>
       <dd><input type="text" name="steam" id="steam" size="25" maxlength="255" value="{STEAM}" class="inputbox autowidth" title="{L_STEAM}" /></dd>
    </dl>]]></action>
-			</edit>
-		</open>
-		<open src="styles/subsilver2/template/ucp_register.html">
-			<edit>
-				<find><![CDATA[<tr>
-   <td class="row1"><b class="genmed">{L_CONFIRM_PASSWORD}: </b></td>
-   <td class="row2"><input class="post" type="password" name="password_confirm" size="25" value="{PASSWORD_CONFIRM}" /></td>
-</tr>]]></find>
-				<action type="after-add"><![CDATA[<tr>
-   <td class="row1"><b class="genmed">{L_STEAM}: </b><br /><span class="gensmall">{STEAM_EXPLAIN}</span></td>
-   <td class="row2"><input class="post" type="text" name="steam" size="25" maxlength="255" value="{STEAM}" /></td>
-</tr>]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, and refresh the template in the ACP.]]></diy-instructions>

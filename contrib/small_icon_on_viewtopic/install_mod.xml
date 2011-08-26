@@ -33,32 +33,68 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="template" href="./subsilver2.xml" lang="en">subsilver2</link>
+		</link-group>
 	</header>
 	<action-group>
 		<copy>
-			<file from="contrib/small_icon_on_viewtopic/root/images/steam_mini.gif" to="images/steam_mini.gif"/>
+			<file from="contrib/small_icon_on_viewtopic/root/styles/prosilver/imageset/icon_contact_steam.gif" to="styles/prosilver/imageset/icon_contact_steam.gif"/>
 		</copy>
+		<open src="viewtopic.php">
+			<edit>
+				<find><![CDATA[	'MSN_IMG' 			=> $user->img('icon_contact_msnm', 'MSNM'),]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+	'STEAM_IMG' 			=> $user->img('icon_contact_steam', 'STEAM'),
+// END steam mod]]></action>
+			</edit>
+		</open>
+		<open src="includes/acp/acp_styles.php">
+			<edit>
+				<find><![CDATA[			'buttons'	=> array(]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[, 'icon_contact_pm']]></inline-find>
+					<inline-action type="after-add"><![CDATA[, 'icon_contact_steam']]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
+		<open src="styles/prosilver/imageset/imageset.cfg">
+			<edit>
+				<find><![CDATA[img_icon_contact_msnm = icon_contact_msnm.gif*20*20]]></find>
+				<action type="after-add"><![CDATA[img_icon_contact_steam = icon_contact_steam.gif*20*20]]></action>
+			</edit>
+		</open>
 		<open src="styles/prosilver/template/viewtopic_body.html">
 			<edit>
+				<comment lang="en"><![CDATA[if you still want the steam status badge then dont remove it or add the code back.]]></comment>
 				<remove><![CDATA[			<!-- IF postrow.U_STEAM --><br /><dd><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></remove>
-				<find><![CDATA[<!-- IF postrow.U_MSN --><li class="msnm-icon">]]></find>
-				<action type="after-add"><![CDATA[                 <!-- IF postrow.U_STEAM --><li class="steam-icon"><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="./images/steam_mini.gif" style="height: 16px; width:16px; margin:2px;" alt="{L_STEAM}: {postrow.U_STEAM}" title="{L_STEAM}: {postrow.U_STEAM}" /></a></li><!-- ENDIF -->]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[		<!-- IF postrow.U_PM or postrow.U_EMAIL or postrow.U_WWW or postrow.U_MSN or postrow.U_ICQ or postrow.U_YIM or postrow.U_AIM or postrow.U_JABBER]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[postrow.U_JABBER]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ or postrow.U_STEAM]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[					<!-- IF postrow.U_MSN --><li class="msnm-icon"><a href="{postrow.U_MSN}" onclick="popup(this.href, 550, 320); return false;" title="{L_MSNM}"><span>{L_MSNM}</span></a></li><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[					<!-- IF postrow.U_STEAM --><li class="steam-icon"><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}" title="{L_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}" title="{L_STEAM}"><!-- ENDIF --><span>{L_STEAM}</span></a></li><!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/theme/buttons.css">
 			<edit>
-				<find><![CDATA[.msnm-icon, .msnm-icon a         { background: none top left no-repeat; }]]></find>
-				<action type="after-add"><![CDATA[.steam-icon, .steam-icon a         { background: none top left no-repeat; }]]></action>
+				<find><![CDATA[.msnm-icon, .msnm-icon a			{ background: none top left no-repeat; }]]></find>
+				<action type="after-add"><![CDATA[.steam-icon, .steam-icon a			{ background: none top left no-repeat; }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ul.profile-icons li.msnm-icon	{ width: {IMG_ICON_CONTACT_MSNM_WIDTH}px; height: {IMG_ICON_CONTACT_MSNM_HEIGHT}px; }]]></find>
+				<action type="after-add"><![CDATA[ul.profile-icons li.steam-icon	{ width: {IMG_ICON_CONTACT_STEAM_WIDTH}px; height: {IMG_ICON_CONTACT_STEAM_HEIGHT}px; }]]></action>
 			</edit>
 		</open>
-		<open src="styles/subsilver2/template/viewtopic_body.html">
+		<open src="styles/prosilver/theme/colours.css">
 			<edit>
-				<remove><![CDATA[			<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><br />&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a><!-- ENDIF -->]]></remove>
-				<find><![CDATA[<!-- IF postrow.U_EMAIL --><a href="{postrow.U_EMAIL}">{EMAIL_IMG}</a> <!-- ENDIF -->]]></find>
-				<inline-edit>
-					<inline-find><![CDATA[<!-- ENDIF -->]]></inline-find>
-					<inline-action type="after-add"><![CDATA[<!-- IF postrow.U_STEAM and S_USER_LOGGED_IN -->&nbsp;<!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="./images/steam_mini.gif" width="16" height="16" alt="{L_STEAM}: {postrow.U_STEAM}" title="{L_STEAM}: {postrow.U_STEAM}" /></a><!-- ENDIF -->]]></inline-action>
-				</inline-edit>
+				<find><![CDATA[.msnm-icon, .msnm-icon a			{ background-image: url("{IMG_ICON_CONTACT_MSNM_SRC}"); }]]></find>
+				<action type="after-add"><![CDATA[.steam-icon, .steam-icon a			{ background-image: url("{IMG_ICON_CONTACT_STEAM_SRC}"); }]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
