@@ -51,7 +51,8 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		</open>
 		<open src="includes/acp/acp_styles.php">
 			<edit>
-				<find><![CDATA[			'buttons'	=> array(]]></find>
+				<find><![CDATA[			'buttons'	=> array(
+				'icon_back_top']]></find>
 				<inline-edit>
 					<inline-find><![CDATA[, 'icon_contact_pm']]></inline-find>
 					<inline-action type="after-add"><![CDATA[, 'icon_contact_steam']]></inline-action>
