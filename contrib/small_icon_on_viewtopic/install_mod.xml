@@ -34,7 +34,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 			</entry>
 		</history>
 		<link-group>
-			<link type="template" href="./subsilver2.xml" lang="en">subsilver2</link>
+			<link type="template" href="subsilver2.xml" lang="en">subsilver2</link>
 		</link-group>
 	</header>
 	<action-group>
