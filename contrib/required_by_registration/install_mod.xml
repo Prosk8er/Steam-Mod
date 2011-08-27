@@ -33,9 +33,6 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
-		<link-group>
-			<link type="template" href="subsilver2.xml" lang="en">subsilver2</link>
-		</link-group>
 	</header>
 	<action-group>
 		<open src="includes/ucp/ucp_register.php">
@@ -93,6 +90,18 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
       <dt><label for="steam">{L_STEAM}:</label><br /><span>{STEAM_EXPLAIN}</span></dt>
       <dd><input type="text" name="steam" id="steam" size="25" maxlength="255" value="{STEAM}" class="inputbox autowidth" title="{L_STEAM}" /></dd>
    </dl>]]></action>
+			</edit>
+		</open>
+		<open src="styles/subsilver2/template/ucp_register.html">
+			<edit>
+				<find><![CDATA[<tr>
+   <td class="row1"><b class="genmed">{L_CONFIRM_PASSWORD}: </b></td>
+   <td class="row2"><input class="post" type="password" name="password_confirm" size="25" value="{PASSWORD_CONFIRM}" /></td>
+</tr>]]></find>
+				<action type="after-add"><![CDATA[<tr>
+   <td class="row1"><b class="genmed">{L_STEAM}: </b><br /><span class="gensmall">{STEAM_EXPLAIN}</span></td>
+   <td class="row2"><input class="post" type="text" name="steam" size="25" maxlength="255" value="{STEAM}" /></td>
+</tr>]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, and refresh the template in the ACP.]]></diy-instructions>
