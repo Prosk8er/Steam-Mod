@@ -42,8 +42,10 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 	</header>
 	<action-group>
 		<copy>
+			<file from="root/language/en/mods/info_acp_steam.php" to="language/en/mods/info_acp_steam.php"/>
 			<file from="root/language/en/mods/steam.php" to="language/en/mods/steam.php"/>
-			<file from="root/db_update.php" to="db_update.php"/>
+			<file from="root/umil/*.*" to="umil/*.*"/>
+			<file from="root/steam_install.php" to="steam_install.php"/>
 		</copy>
 		<open src="memberlist.php">
 			<edit>
@@ -217,8 +219,8 @@ $user->add_lang('mods/steam');
 }]]></action>
 			</edit>
 		</open>
-		<php-installer><![CDATA[db_update.php]]></php-installer>
-		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, browse to the db_update.php file if it doesnt work for you, you can manually run this in phpmyadmin:
+		<php-installer><![CDATA[steam_install.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, browse to the steam_install.php file if it doesnt work for you, you can manually run this in phpmyadmin:
 ALTER TABLE phpbb_users ADD user_steam VARCHAR( 255 ) NOT NULL DEFAULT '';
 Once run, delete the file, purge the cache, refresh the template, theme and imageset in the ACP. If you want a small steam icon instead on the viewtopic page after install go to contrib/small_icon_on_viewtopic/install_mod.xml or if you want it required by registration go to contrib/required_by_registration/install_mod.xml]]></diy-instructions>
 	</action-group>

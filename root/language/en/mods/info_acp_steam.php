@@ -5,7 +5,7 @@
 *
 * @author Prosk8er (Tyler) prosk8er@gotskillslounge.com
 * @package Steam Mod
-* @version $Id: steam.php 100 2011-08-28 17:42:30Z Prosk8er $
+* @version $Id: info_acp_steam.php 100 2011-08-28 17:42:30Z Prosk8er $
 * @copyright (c) 2011 Prosk8er ( http://www.gotskillslounge.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -37,10 +37,13 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'STEAM'			=> 'Steam',
-	'STEAM_EXPLAIN'		=> 'Please visit the %sFAQ%s to learn more.',
-	'TOO_LONG_STEAM'	=> 'The Steam name you entered is too long.',
-	'TOO_SHORT_STEAM'	=> 'The Steam name you entered is too short.',
+	'STEAM_MOD'			=> 'Steam Mod',
+	'INSTALL_STEAM_MOD'		=> 'Install Steam Mod',
+	'INSTALL_STEAM_MOD_CONFIRM'	=> 'Are you sure you want to install the Steam Mod?',
+	'UPDATE_STEAM_MOD'		=> 'Update Steam Mod',
+	'UPDATE_STEAM_MOD_CONFIRM'	=> 'Are you sure you want to update the Steam Mod?',
+	'UNINSTALL_STEAM_MOD'		=> 'Uninstall Steam Mod',
+	'UNINSTALL_STEAM_MOD_CONFIRM'	=> 'Are you sure you want to uninstall the Steam Mod?',
 ));
 
 ?>

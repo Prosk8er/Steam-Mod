@@ -113,7 +113,6 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 					<inline-find><![CDATA[&nbsp;<!-- IF postrow.U_POST_AUTHOR --><a href="{postrow.U_POST_AUTHOR}">{PROFILE_IMG}</a> <!-- ENDIF -->]]></inline-find>
 					<inline-action type="after-add"><![CDATA[ <!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF -->{STEAM_IMG}</a> <!-- ENDIF -->]]></inline-action>
 				</inline-edit>
-				<action type="after-add"><![CDATA[ <!-- IF postrow.U_STEAM and S_USER_LOGGED_IN --><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF -->{STEAM_IMG}</a> <!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
