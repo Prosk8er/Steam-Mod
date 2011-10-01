@@ -37,6 +37,10 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 	<action-group>
 		<open src="styles/prosilver/template/ucp_pm_viewmessage.html">
 			<edit>
+				<comment lang="en"><![CDATA[around line 68]]></comment>
+				<remove><![CDATA[		<!-- IF U_STEAM --><br /><dd><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></remove>
+			</edit>
+			<edit>
 				<comment lang="en"><![CDATA[around line 73]]></comment>
 				<find><![CDATA[		<!-- IF U_PM or U_EMAIL or U_WWW or U_MSN or U_ICQ or U_YIM or U_AIM or U_JABBER]]></find>
 				<inline-edit>
