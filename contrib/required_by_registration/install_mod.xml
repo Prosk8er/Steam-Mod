@@ -7,9 +7,8 @@
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
 		<title lang="en"><![CDATA[Steam Mod Required By Registration]]></title>
-		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a image under their avatar (stating if there online/offline or what game their playing) on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
-		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
-This mod is based on RMcGirr83's xfire mod]]></author-notes>
+		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
+		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.]]></author-notes>
 		<author-group>
 			<author>
 				<realname><![CDATA[Tyler]]></realname>
@@ -22,7 +21,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<installation>
 			<level>easy</level>
 			<time>900</time>
-			<target-version>3.0.9</target-version>
+			<target-version>3.0.10</target-version>
 		</installation>
 		<history>
 			<entry>
@@ -33,58 +32,51 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="parent" href="../../install_mod.xml" lang="en">Main install file</link>
+		</link-group>
 	</header>
 	<action-group>
 		<open src="includes/ucp/ucp_register.php">
 			<edit>
 				<find><![CDATA[		$cp = new custom_profile();]]></find>
-				<action type="after-add"><![CDATA[		// steam mod
-		$user->add_lang('mods/steam');]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+		$user->add_lang('mods/steam');
+// END steam mod]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[		$data = array(
-			'username'			=> utf8_normalize_nfc(request_var('username', '', true)),
-			'new_password'		=> request_var('new_password', '', true),]]></find>
-				<action type="after-add"><![CDATA[// Steam Required For Registration
-			'steam'            => request_var('steam', '', true),
-// Steam Required For Registration]]></action>
+				<find><![CDATA[			'tz'				=> request_var('tz', (float) $timezone),]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+			'steam'				=> request_var('steam', '', true),
+// END steam mod]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[				'password_confirm'	=> array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
-				'email'				=> array(
-					array('string', false, 6, 60),
-					array('email')),
-				'email_confirm'		=> array('string', false, 6, 60),]]></find>
-				<action type="after-add"><![CDATA[// Steam Required For Registration
-				'steam'            => array('string', false, 2, 60),
-// Steam Required For Registration]]></action>
+				<find><![CDATA[				'tz'				=> array('num', false, -14, 14),
+				'lang'				=> array('language_iso_name'),]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+				'steam'				=> array('string', false, 2, 60),
+// END steam mod]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[				$user_row = array(
-					'username'				=> $data['username'],
-					'user_password'			=> phpbb_hash($data['new_password']),
-					'user_email'			=> $data['email'],]]></find>
-				<action type="after-add"><![CDATA[// Steam Required For Registration
-					'user_steam'            => $data['steam'],
-// Steam Required For Registration]]></action>
+				<find><![CDATA[					'user_lang'				=> $data['lang'],]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+					'user_steam'				=> $data['steam'],
+// END steam mod]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[		$template->assign_vars(array(
-			'ERROR'				=> (sizeof($error)) ? implode('<br />', $error) : '',
-			'USERNAME'			=> $data['username'],
-			'PASSWORD'			=> $data['new_password'],
-			'PASSWORD_CONFIRM'	=> $data['password_confirm'],]]></find>
-				<action type="after-add"><![CDATA[// Steam Required For Registration
-			'STEAM'            => $data['steam'],
-			'STEAM_EXPLAIN'      => sprintf($user->lang['STEAM_EXPLAIN'], '<a href="' . append_sid("{$phpbb_root_path}faq.$phpEx") . '">', '</a>'),
-// Steam Required For Registration]]></action>
+				<find><![CDATA[			'S_LANG_OPTIONS'	=> language_select($data['lang']),
+			'S_TZ_OPTIONS'		=> tz_select($data['tz']),]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+			'STEAM'			=> $data['steam'],
+			'STEAM_EXPLAIN'		=> sprintf($user->lang['STEAM_EXPLAIN'], '<a href="' . append_sid("{$phpbb_root_path}faq.$phpEx") . '">', '</a>'),
+// END steam mod]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/template/ucp_register.html">
 			<edit>
 				<find><![CDATA[	<dl>
-		<dt><label for="password_confirm">{L_CONFIRM_PASSWORD}:</label></dt>
-		<dd><input type="password" tabindex="5" name="password_confirm" id="password_confirm" size="25" value="{PASSWORD_CONFIRM}" class="inputbox autowidth" title="{L_CONFIRM_PASSWORD}" /></dd>
+		<dt><label for="tz">{L_TIMEZONE}:</label></dt>
+		<dd><select name="tz" id="tz" tabindex="7" class="autowidth">{S_TZ_OPTIONS}</select></dd>
 	</dl>]]></find>
 				<action type="after-add"><![CDATA[	<dl>
 		<dt><label for="steam">{L_STEAM}:</label><br /><span>{STEAM_EXPLAIN}</span></dt>
@@ -95,8 +87,8 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<open src="styles/subsilver2/template/ucp_register.html">
 			<edit>
 				<find><![CDATA[<tr>
-	<td class="row1"><b class="genmed">{L_CONFIRM_PASSWORD}: </b></td>
-	<td class="row2"><input class="post" type="password" name="password_confirm" size="25" value="{PASSWORD_CONFIRM}" /></td>
+	<td class="row1"><b class="genmed">{L_TIMEZONE}: </b></td>
+	<td class="row2"><select name="tz">{S_TZ_OPTIONS}</select></td>
 </tr>]]></find>
 				<action type="after-add"><![CDATA[<tr>
 	<td class="row1"><b class="genmed">{L_STEAM}: </b><br /><span class="gensmall">{STEAM_EXPLAIN}</span></td>

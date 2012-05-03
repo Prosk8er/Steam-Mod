@@ -7,7 +7,7 @@
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
 		<title lang="en"><![CDATA[Steam Mod]]></title>
-		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a image under their avatar (stating if there online/offline or what game their playing) on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
+		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
 		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
 This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<author-group>
@@ -36,8 +36,8 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<link-group>
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">subsilver2</link>
 			<link type="contrib" href="./contrib/required_by_registration/install_mod.xml" lang="en">Required By Registration</link>
-			<link type="contrib" href="./contrib/small_icon_on_viewmessage/install_mod.xml" lang="en">Small Icon On Viewmessage</link>
-			<link type="contrib" href="./contrib/small_icon_on_viewtopic/install_mod.xml" lang="en">Small Icon On Viewtopic</link>
+			<link type="contrib" href="./contrib/small_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
+			<link type="contrib" href="./contrib/small_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
 			<link type="contrib" href="./contrib/steam_viewmessage/install_mod.xml" lang="en">Steam Mod for viewmessage</link>
 		</link-group>
 	</header>
@@ -45,21 +45,22 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<copy>
 			<file from="root/language/en/mods/info_acp_steam.php" to="language/en/mods/info_acp_steam.php"/>
 			<file from="root/language/en/mods/steam.php" to="language/en/mods/steam.php"/>
+			<file from="root/styles/prosilver/imageset/icon_contact_steam.gif" to="styles/prosilver/imageset/icon_contact_steam.gif"/>
 			<file from="root/umil/*.*" to="umil/*.*"/>
 			<file from="root/steam_install.php" to="steam_install.php"/>
 		</copy>
 		<open src="memberlist.php">
 			<edit>
-				<find><![CDATA[$user->setup(array('memberlist', 'groups'));]]></find>
+				<find><![CDATA[$user->setup(array('memberlist',]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
 $user->add_lang('mods/steam');
 // END steam mod]]></action>
 			</edit>
 			<edit>
-				<find><![CDATA[			'SIGNATURE'		=> $member['user_sig'],]]></find>
+				<find><![CDATA['SIGNATURE'		=>]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
 			'STEAM'		=> (!empty($member['user_steam'])) ? $member['user_steam'] : '',
-			'STEAM_IS_INT'   => (!empty($member['user_steam']) && is_numeric($member['user_steam'])) ? true : false,
+			'STEAM_IS_INT'	=> (!empty($member['user_steam']) && is_numeric($member['user_steam'])) ? true : false,
 // END steam mod]]></action>
 			</edit>
 		</open>
@@ -71,24 +72,30 @@ $user->add_lang('mods/steam');
 // END steam mod]]></action>
 			</edit>
 			<edit>
+				<find><![CDATA[	'MSN_IMG' 			=> $user->img('icon_contact_msnm', 'MSNM'),]]></find>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+	'STEAM_IMG' 			=> $user->img('icon_contact_steam', 'STEAM'),
+// END steam mod]]></action>
+			</edit>
+			<edit>
 				<find><![CDATA[				'msn'				=> '',]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-				'steam'				=> '',
+				'steam'			=> '',
 				'steam_is_int'		=> '',
 // END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[				'msn'			=> ($row['user_msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", "mode=contact&amp;action=msnm&amp;u=$poster_id") : '',]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-				'steam'			=> ($row['user_steam'] && $auth->acl_get('u_sendim'))  ? $row['user_steam'] : '',
-				'steam_is_int'	=> '',
+				'steam'			=> (isset($row['user_steam']) && $auth->acl_get('u_sendim')) ? $row['user_steam'] : '',
+				'steam_is_int'		=> '',
 // END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[		'U_MSN'			=> $user_cache[$poster_id]['msn'],]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-		'U_STEAM'		=> $user_cache[$poster_id]['steam'],
-		'STEAM_IS_INT'  => (!empty($user_cache[$poster_id]['steam']) && is_numeric($user_cache[$poster_id]['steam'])) ? true : false,
+		'U_STEAM'			=> $user_cache[$poster_id]['steam'],
+		'STEAM_IS_INT'			=> (!empty($user_cache[$poster_id]['steam']) && is_numeric($user_cache[$poster_id]['steam'])) ? true : false,
 // END steam mod]]></action>
 			</edit>
 		</open>
@@ -104,32 +111,47 @@ $user->add_lang('mods/steam');
 	</dl>]]></action>
 			</edit>
 		</open>
+		<open src="includes/acp/acp_styles.php">
+			<edit>
+				<find><![CDATA[			'buttons'	=> array(
+				'icon_back_top']]></find>
+				<inline-edit>
+					<inline-find><![CDATA[, 'icon_contact_www']]></inline-find>
+					<inline-action type="after-add"><![CDATA[, 'icon_contact_steam']]></inline-action>
+				</inline-edit>
+			</edit>
+		</open>
 		<open src="includes/acp/acp_users.php">
 			<edit>
 				<find><![CDATA[			case 'profile':]]></find>
 				<find><![CDATA[				$cp = new custom_profile();]]></find>
-				<action type="after-add"><![CDATA[				// steam mod
-				$user->add_lang('mods/steam');]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+				$user->add_lang('mods/steam');
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[					'msn'			=> request_var('msn', $user_row['user_msnm']),]]></find>
-				<action type="after-add"><![CDATA[					// steam mod
-					'steam'			=> strtolower(request_var('steam', $user_row['user_steam'])),]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+					'steam'			=> request_var('steam', (!empty($user_row['user_steam'])) ? $user_row['user_steam'] : ''),
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[						'msn'			=> array('string', true, 5, 255),]]></find>
-				<action type="after-add"><![CDATA[						// steam mod
-						'steam'		=> array('string', true, 4, 255),]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+						'steam'			=> array('string', true, 4, 255),
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[							'user_msnm'		=> $data['msn'],]]></find>
-				<action type="after-add"><![CDATA[							// steam mod
-							'user_steam'	       => $data['steam'],]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+							'user_steam'		=> $data['steam'],
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[					'MSN'			=> $data['msn'],]]></find>
-				<action type="after-add"><![CDATA[					// steam mod
-					'STEAM'			=> $data['steam'],]]></action>
+				<action type="after-add"><![CDATA[//
+					'STEAM'			=> $data['steam'],
+// END steam mod]]></action>
 			</edit>
 		</open>
 		<open src="includes/ucp/ucp_profile.php">
@@ -137,32 +159,32 @@ $user->add_lang('mods/steam');
 				<find><![CDATA[				$cp_data = $cp_error = array();]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
 				$user->add_lang('mods/steam');				
-//END steam mod]]></action>
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[					'msn'			=> request_var('msn', $user->data['user_msnm']),]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-					'steam'                 => strtolower(request_var('steam', $user->data['user_steam'])),
-//END steam mod]]></action>
+					'steam'			=> request_var('steam', (!empty($user->data['user_steam'])) ? $user->data['user_steam'] : ''),
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[						'msn'			=> array('string', true, 5, 255),]]></find>
-				<action type="after-add"><![CDATA[//BEGIN steam mod
-						'steam'                 => array('string', true, 4, 255),
-//END steam mod]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+						'steam'			=> array('string', true, 4, 255),
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[							'user_msnm'		=> $data['msn'],]]></find>
-				<action type="after-add"><![CDATA[//BEGIN steam mod
-							'user_steam'            => $data['steam'],
-//END steam mod]]></action>
+				<action type="after-add"><![CDATA[// BEGIN steam mod
+							'user_steam'		=> $data['steam'],
+// END steam mod]]></action>
 			</edit>
 			<edit>
 				<find><![CDATA[					'MSN'		=> $data['msn'],]]></find>
-				<action type="after-add"><![CDATA[//BEGIN steam mod
+				<action type="after-add"><![CDATA[// BEGIN steam mod
 					'STEAM'			=> $data['steam'],
 					'STEAM_EXPLAIN'		=> sprintf($user->lang['STEAM_EXPLAIN'], '<a href="' . append_sid("{$phpbb_root_path}faq.$phpEx") . '">', '</a>'),
-//END steam mod]]></action>
+// END steam mod]]></action>
 			</edit>
 		</open>
 		<open src="language/en/help_faq.php">
@@ -176,7 +198,14 @@ $user->add_lang('mods/steam');
 	array(
 		0 => 'Where do i get my steam id from?',
 		1 => 'Copy your steam profile link like this http://steamcommunity.com/profiles/<b>00000000000000</b> or http://steamcommunity.com/id/<b>abcdefgh</b> and put whats in bold into the steam field.'
-	),]]></action>
+	),
+]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/imageset/imageset.cfg">
+			<edit>
+				<find><![CDATA[img_icon_contact_msnm = icon_contact_msnm.gif*20*20]]></find>
+				<action type="after-add"><![CDATA[img_icon_contact_steam = icon_contact_steam.gif*20*20]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/template/memberlist_view.html">
@@ -187,7 +216,7 @@ $user->add_lang('mods/steam');
 	<div class="inner"><span class="corners-top"><span></span></span>
 		<h3>{L_STEAM}</h3>
 		<div class="postbody">
-			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/extended/steam/{STEAM}.png" border="0" /></a></div>
+			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/extended/steam/{STEAM}.png" border="0" alt="" /></a></div>
 		</div>
 	<span class="corners-bottom"><span></span></span></div>
 </div>
@@ -208,8 +237,25 @@ $user->add_lang('mods/steam');
 		</open>
 		<open src="styles/prosilver/template/viewtopic_body.html">
 			<edit>
-				<find><![CDATA[			<!-- IF postrow.RANK_TITLE or postrow.RANK_IMG --><dd>{postrow.RANK_TITLE}<!-- IF postrow.RANK_TITLE and postrow.RANK_IMG --><br /><!-- ENDIF -->{postrow.RANK_IMG}</dd><!-- ENDIF -->]]></find>
-				<action type="after-add"><![CDATA[			<!-- IF postrow.U_STEAM --><br /><dd><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{postrow.U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></action>
+				<find><![CDATA[<!-- IF postrow.U_PM or postrow.U_EMAIL]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[postrow.U_JABBER]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ or postrow.U_STEAM]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<find><![CDATA[					<!-- IF postrow.U_MSN --><li class="msnm-icon"><a href="{postrow.U_MSN}" onclick="popup(this.href, 550, 320); return false;" title="{L_MSNM}"><span>{L_MSNM}</span></a></li><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[					<!-- IF postrow.U_STEAM --><li class="steam-icon"><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}" title="{L_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}" title="{L_STEAM}"><!-- ENDIF --><span>{L_STEAM}</span></a></li><!-- ENDIF -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/buttons.css">
+			<edit>
+				<find><![CDATA[.msnm-icon, .msnm-icon a			{ background: none top left no-repeat; }]]></find>
+				<action type="after-add"><![CDATA[.steam-icon, .steam-icon a			{ background: none top left no-repeat; }]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA[ul.profile-icons li.msnm-icon	{ width: {IMG_ICON_CONTACT_MSNM_WIDTH}px; height: {IMG_ICON_CONTACT_MSNM_HEIGHT}px; }]]></find>
+				<action type="after-add"><![CDATA[ul.profile-icons li.steam-icon	{ width: {IMG_ICON_CONTACT_STEAM_WIDTH}px; height: {IMG_ICON_CONTACT_STEAM_HEIGHT}px; }]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/theme/colours.css">
@@ -219,10 +265,12 @@ $user->add_lang('mods/steam');
 	background-color: transparent;
 }]]></action>
 			</edit>
+			<edit>
+				<find><![CDATA[.msnm-icon, .msnm-icon a			{ background-image: url("{IMG_ICON_CONTACT_MSNM_SRC}"); }]]></find>
+				<action type="after-add"><![CDATA[.steam-icon, .steam-icon a			{ background-image: url("{IMG_ICON_CONTACT_STEAM_SRC}"); }]]></action>
+			</edit>
 		</open>
 		<php-installer><![CDATA[steam_install.php]]></php-installer>
-		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, browse to the steam_install.php file if it doesnt work for you, you can manually run this in phpmyadmin:
-ALTER TABLE phpbb_users ADD user_steam VARCHAR( 255 ) NOT NULL DEFAULT '';
-Once run, delete the file, purge the cache, refresh the template, theme and imageset in the ACP. If you want a small steam icon instead on the viewtopic page after install go to contrib/small_icon_on_viewtopic/install_mod.xml or if you want it required by registration go to contrib/required_by_registration/install_mod.xml]]></diy-instructions>
+		<diy-instructions lang="en"><![CDATA[Once the installer has been run you can delete the file.]]></diy-instructions>
 	</action-group>
 </mod>

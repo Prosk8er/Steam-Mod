@@ -6,9 +6,12 @@
 	<header>
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
-		<title lang="en"><![CDATA[Steam Mod Small Icon On Viewmessage]]></title>
+		<title lang="en"><![CDATA[Steam Mod Status On Viewmessage]]></title>
 		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a image under their avatar (stating if there online/offline or what game their playing) on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
 		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
+
+To be able to use 'Steam Mod Status On Viewmessage' you must first install 'Steam Mod on viewmessage'
+
 This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<author-group>
 			<author>
@@ -22,7 +25,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<installation>
 			<level>easy</level>
 			<time>900</time>
-			<target-version>3.0.9</target-version>
+			<target-version>3.0.10</target-version>
 		</installation>
 		<history>
 			<entry>
@@ -33,27 +36,18 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="parent" href="../../install_mod.xml" lang="en">Main install file</link>
+		</link-group>
 	</header>
 	<action-group>
 		<open src="styles/prosilver/template/ucp_pm_viewmessage.html">
 			<edit>
-				<comment lang="en"><![CDATA[around line 68]]></comment>
-				<remove><![CDATA[		<!-- IF U_STEAM --><br /><dd><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></remove>
-			</edit>
-			<edit>
-				<comment lang="en"><![CDATA[around line 73]]></comment>
-				<find><![CDATA[		<!-- IF U_PM or U_EMAIL or U_WWW or U_MSN or U_ICQ or U_YIM or U_AIM or U_JABBER]]></find>
-				<inline-edit>
-					<inline-find><![CDATA[U_JABBER]]></inline-find>
-					<inline-action type="after-add"><![CDATA[ or U_STEAM]]></inline-action>
-				</inline-edit>
-			</edit>
-			<edit>
-				<find><![CDATA[			<!-- IF U_MSN --><li class="msnm-icon"><a href="{U_MSN}" onclick="popup(this.href, 550, 320); return false;" title="{L_MSNM}"><span>{L_MSNM}</span></a></li><!-- ENDIF -->]]></find>
-				<action type="after-add"><![CDATA[			<!-- IF U_STEAM --><li class="steam-icon"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}" title="{L_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}" title="{L_STEAM}"><!-- ENDIF --><span>{L_STEAM}</span></a></li><!-- ENDIF -->]]></action>
+				<comment lang="en"><![CDATA[around line 67]]></comment>
+				<find><![CDATA[		<!-- IF RANK_IMG --><dd>{RANK_IMG}</dd><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[		<!-- IF U_STEAM --><br /><dd><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{U_STEAM}.png" border="0" width="160" height="45" alt="" /></a></dd><!-- ENDIF -->]]></action>
 			</edit>
 		</open>
-		<diy-instructions lang="en"><![CDATA[You have to first install the addon steam on viewmessage!!!
-Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
+		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
 	</action-group>
 </mod>

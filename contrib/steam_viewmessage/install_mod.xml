@@ -6,10 +6,9 @@
 	<header>
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
-		<title lang="en"><![CDATA[Steam Mod on viewmessage]]></title>
-		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a image under their avatar (stating if there online/offline or what game their playing) on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
-		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
-This mod is based on RMcGirr83's xfire mod]]></author-notes>
+		<title lang="en"><![CDATA[Steam Mod On Viewmessage]]></title>
+		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
+		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.]]></author-notes>
 		<author-group>
 			<author>
 				<realname><![CDATA[Tyler]]></realname>
@@ -22,7 +21,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<installation>
 			<level>easy</level>
 			<time>900</time>
-			<target-version>3.0.9</target-version>
+			<target-version>3.0.10</target-version>
 		</installation>
 		<history>
 			<entry>
@@ -33,6 +32,9 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="parent" href="../../install_mod.xml" lang="en">Main install file</link>
+		</link-group>
 	</header>
 	<action-group>
 		<open src="includes/ucp/ucp_pm_viewmessage.php">
@@ -47,16 +49,24 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				<comment lang="en"><![CDATA[around line 217]]></comment>
 				<find><![CDATA[		'U_MSN'			=> ($user_info['user_msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=contact&amp;action=msnm&amp;u=' . $author_id) : '',]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-		'U_STEAM'		=> ($user_info['user_steam'] && $auth->acl_get('u_sendim')) ? $user_info['user_steam'] : '',
-		'STEAM_IS_INT'	=> (!empty($user_info['user_steam']) && is_numeric($user_info['user_steam'])) ? true : false,
+		'U_STEAM'		=> (isset($user_info['user_steam']) && $auth->acl_get('u_sendim')) ? $user_info['user_steam'] : '',
+		'STEAM_IS_INT'		=> (!empty($user_info['user_steam']) && is_numeric($user_info['user_steam'])) ? true : false,
 // END steam mod]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/template/ucp_pm_viewmessage.html">
 			<edit>
-				<comment lang="en"><![CDATA[around line 67]]></comment>
-				<find><![CDATA[		<!-- IF RANK_IMG --><dd>{RANK_IMG}</dd><!-- ENDIF -->]]></find>
-				<action type="after-add"><![CDATA[		<!-- IF U_STEAM --><br /><dd><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}"><!-- ENDIF --><img src="http://badges.steamstatus.com/profile/default/steam/{U_STEAM}.png" border="0" width=160 height=45 /></a></dd><!-- ENDIF -->]]></action>
+				<comment lang="en"><![CDATA[around line 73]]></comment>
+				<find><![CDATA[		<!-- IF U_PM or U_EMAIL or U_WWW or U_MSN or U_ICQ or U_YIM or U_AIM or U_JABBER]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[U_JABBER]]></inline-find>
+					<inline-action type="after-add"><![CDATA[ or U_STEAM]]></inline-action>
+				</inline-edit>
+			</edit>
+			<edit>
+				<comment lang="en"><![CDATA[around line 79]]></comment>
+				<find><![CDATA[			<!-- IF U_MSN --><li class="msnm-icon"><a href="{U_MSN}" onclick="popup(this.href, 550, 320); return false;" title="{L_MSNM}"><span>{L_MSNM}</span></a></li><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[			<!-- IF U_STEAM --><li class="steam-icon"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{U_STEAM}" title="{L_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{U_STEAM}" title="{L_STEAM}"><!-- ENDIF --><span>{L_STEAM}</span></a></li><!-- ENDIF -->]]></action>
 			</edit>
 		</open>
 		<diy-instructions lang="en"><![CDATA[Login to your forum as admin, purge the cache, refresh the template, theme and imageset in the ACP.]]></diy-instructions>
