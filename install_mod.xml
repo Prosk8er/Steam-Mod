@@ -36,9 +36,9 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		<link-group>
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">subsilver2</link>
 			<link type="contrib" href="./contrib/required_by_registration/install_mod.xml" lang="en">Required By Registration</link>
-			<link type="contrib" href="./contrib/small_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
-			<link type="contrib" href="./contrib/small_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
-			<link type="contrib" href="./contrib/steam_viewmessage/install_mod.xml" lang="en">Steam Mod for viewmessage</link>
+			<link type="contrib" href="./contrib/steam_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
+			<link type="contrib" href="./contrib/steam_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
+			<link type="contrib" href="./contrib/steam_viewmessage/install_mod.xml" lang="en">Steam Mod for Viewmessage</link>
 		</link-group>
 	</header>
 	<action-group>
