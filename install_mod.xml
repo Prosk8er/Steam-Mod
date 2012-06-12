@@ -39,6 +39,10 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 			<link type="contrib" href="./contrib/steam_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
 			<link type="contrib" href="./contrib/steam_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
 			<link type="contrib" href="./contrib/steam_viewmessage/install_mod.xml" lang="en">Steam Mod for Viewmessage</link>
+			<link type="contrib" href="./contrib/steamprofile/install_ajax.xml" lang="en">Steam Mod Steamprofile Ajax</link>
+			<link type="contrib" href="./contrib/steamprofile/install_image.xml" lang="en">Steam Mod Steamprofile Image</link>
+			<link type="contrib" href="./contrib/steamprofile/install_ajax_viewmessage.xml" lang="en">Steam Mod Steamprofile Ajax On Viewmessage</link>
+			<link type="contrib" href="./contrib/steamprofile/install_image_viewmessage.xml" lang="en">Steam Mod Steamprofile Image On Viewmessage</link>
 		</link-group>
 	</header>
 	<action-group>
