@@ -70,7 +70,8 @@ $user->add_lang('mods/steam');
 		</open>
 		<open src="viewtopic.php">
 			<edit>
-				<find><![CDATA[$auth->acl($user->data);]]></find>
+				<find><![CDATA[// Setup look and feel
+$user->setup('viewtopic', $topic_data['forum_style']);]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
 $user->add_lang('mods/steam');
 // END steam mod]]></action>
