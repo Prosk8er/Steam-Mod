@@ -2,14 +2,14 @@
 <?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
 <!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
 <!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
-<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd">
 	<header>
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
 		<title lang="en"><![CDATA[Steam Mod]]></title>
 		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
 		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
-This mod is based on RMcGirr83's xfire mod]]></author-notes>
+This mod is based on the xfire mod]]></author-notes>
 		<author-group>
 			<author>
 				<realname><![CDATA[Tyler]]></realname>
@@ -18,13 +18,20 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 				<email><![CDATA[prosk8er@gotskillslounge.com]]></email>
 			</author>
 		</author-group>
-		<mod-version>1.0.0</mod-version>
+		<mod-version>1.0.1</mod-version>
 		<installation>
 			<level>easy</level>
 			<time>900</time>
 			<target-version>3.0.11</target-version>
 		</installation>
 		<history>
+			<entry>
+				<date>2012-10-27</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Mod Validation fixes.]]></change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2010-09-16</date>
 				<rev-version>1.0.0</rev-version>
@@ -35,6 +42,7 @@ This mod is based on RMcGirr83's xfire mod]]></author-notes>
 		</history>
 		<link-group>
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">subsilver2</link>
+			<link type="contrib" href="./contrib/update_100_to_101/install_mod.xml" lang="en">Update 1.0.0 to 1.0.1</link>
 			<link type="contrib" href="./contrib/required_by_registration/install_mod.xml" lang="en">Required By Registration</link>
 			<link type="contrib" href="./contrib/steam_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
 			<link type="contrib" href="./contrib/steam_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
@@ -143,7 +151,7 @@ $user->add_lang('mods/steam');
 			<edit>
 				<find><![CDATA[						'msn'			=> array('string', true, 5, 255),]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-						'steam'			=> array('string', true, 4, 255),
+						'steam'			=> array('string', true, 2, 255),
 // END steam mod]]></action>
 			</edit>
 			<edit>
@@ -175,7 +183,7 @@ $user->add_lang('mods/steam');
 			<edit>
 				<find><![CDATA[						'msn'			=> array('string', true, 5, 255),]]></find>
 				<action type="after-add"><![CDATA[// BEGIN steam mod
-						'steam'			=> array('string', true, 4, 255),
+						'steam'			=> array('string', true, 2, 255),
 // END steam mod]]></action>
 			</edit>
 			<edit>
@@ -201,10 +209,16 @@ $user->add_lang('mods/steam');
 		1 => 'Steam'
 	),
 	array(
-		0 => 'Where do i get my steam id from?',
-		1 => 'Copy your steam profile link like this http://steamcommunity.com/profiles/<b>00000000000000</b> or http://steamcommunity.com/id/<b>abcdefgh</b> and put whats in bold into the steam field.'
+		0 => 'Where do I get my Steam id from?',
+		1 => 'Copy your Steam profile link like this http://steamcommunity.com/profiles/<strong>00000000000000</strong> or http://steamcommunity.com/id/<strong>abcdefgh</strong> and put what’s in bold into the Steam field.'
 	),
 ]]></action>
+			</edit>
+		</open>
+		<open src="language/en/acp/styles.php">
+			<edit>
+				<find><![CDATA[	'IMG_ICON_CONTACT_WWW'		=> 'Website',]]></find>
+				<action type="after-add"><![CDATA[	'IMG_ICON_CONTACT_STEAM'	=> 'Steam',]]></action>
 			</edit>
 		</open>
 		<open src="styles/prosilver/imageset/imageset.cfg">
@@ -221,7 +235,7 @@ $user->add_lang('mods/steam');
 	<div class="inner"><span class="corners-top"><span></span></span>
 		<h3>{L_STEAM}</h3>
 		<div class="postbody">
-			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/extended/steam/{STEAM}.png" border="0" alt="" /></a></div>
+			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
 		</div>
 	<span class="corners-bottom"><span></span></span></div>
 </div>
