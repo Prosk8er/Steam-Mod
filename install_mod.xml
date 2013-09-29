@@ -18,13 +18,21 @@ This mod is based on the xfire mod]]></author-notes>
 				<email><![CDATA[prosk8er@gotskillslounge.com]]></email>
 			</author>
 		</author-group>
-		<mod-version>1.0.1</mod-version>
+		<mod-version>1.0.2</mod-version>
 		<installation>
 			<level>easy</level>
 			<time>900</time>
-			<target-version>3.0.11</target-version>
+			<target-version>3.0.12</target-version>
 		</installation>
 		<history>
+			<entry>
+				<date>2013-09-28</date>
+				<rev-version>1.0.2</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[Updated for phpBB 3.0.12]]></change>
+					<change><![CDATA[removed steam status addon]]></change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2012-10-27</date>
 				<rev-version>1.0.1</rev-version>
@@ -43,9 +51,8 @@ This mod is based on the xfire mod]]></author-notes>
 		<link-group>
 			<link type="template" href="./contrib/subsilver2.xml" lang="en">subsilver2</link>
 			<link type="contrib" href="./contrib/update_100_to_101/install_mod.xml" lang="en">Update 1.0.0 to 1.0.1</link>
+			<link type="contrib" href="./contrib/update_101_to_102/install_mod.xml" lang="en">Update 1.0.1 to 1.0.2</link>
 			<link type="contrib" href="./contrib/required_by_registration/install_mod.xml" lang="en">Required By Registration</link>
-			<link type="contrib" href="./contrib/steam_status_on_viewmessage/install_mod.xml" lang="en">Steam Mod Status On Viewmessage</link>
-			<link type="contrib" href="./contrib/steam_status_on_viewtopic/install_mod.xml" lang="en">Steam Mod Status On Viewtopic</link>
 			<link type="contrib" href="./contrib/steam_viewmessage/install_mod.xml" lang="en">Steam Mod for Viewmessage</link>
 			<link type="contrib" href="./contrib/steamprofile/install_ajax.xml" lang="en">Steam Mod Steamprofile Ajax</link>
 			<link type="contrib" href="./contrib/steamprofile/install_image.xml" lang="en">Steam Mod Steamprofile Image</link>
@@ -235,7 +242,7 @@ $user->add_lang('mods/steam');
 	<div class="inner"><span class="corners-top"><span></span></span>
 		<h3>{L_STEAM}</h3>
 		<div class="postbody">
-			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
+			<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
 		</div>
 	<span class="corners-bottom"><span></span></span></div>
 </div>

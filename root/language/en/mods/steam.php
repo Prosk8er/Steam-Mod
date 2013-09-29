@@ -5,7 +5,7 @@
 *
 * @author Prosk8er (Tyler) prosk8er@gotskillslounge.com
 * @package Steam Mod
-* @version $Id: steam.php 101 2012-10-27 13:30:30Z Prosk8er $
+* @version $Id: steam.php 102 2013-09-28 20:17:40Z Prosk8er $
 * @copyright (c) 2011 Prosk8er ( http://www.gotskillslounge.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

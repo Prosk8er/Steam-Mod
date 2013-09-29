@@ -6,7 +6,7 @@
 	<header>
 		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
 		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
-		<title lang="en"><![CDATA[Steam Mod]]></title>
+		<title lang="en"><![CDATA[Steam Mod Update 1.0.1 to 1.0.2]]></title>
 		<description lang="en"><![CDATA[Users that have entered in an Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.]]></description>
 		<author-notes lang="en"><![CDATA[Works on prosilver and subsilver2 styles.
 This mod is based on the xfire mod]]></author-notes>
@@ -21,7 +21,7 @@ This mod is based on the xfire mod]]></author-notes>
 		<mod-version>1.0.2</mod-version>
 		<installation>
 			<level>easy</level>
-			<time>180</time>
+			<time>900</time>
 			<target-version>3.0.12</target-version>
 		</installation>
 		<history>
@@ -49,54 +49,27 @@ This mod is based on the xfire mod]]></author-notes>
 			</entry>
 		</history>
 		<link-group>
-			<link type="parent" href="../install_mod.xml" lang="en">Main install file</link>
+			<link type="parent" href="../../install_mod.xml" lang="en">Main install file</link>
 		</link-group>
 	</header>
 	<action-group>
 		<copy>
-			<file from="root/styles/subsilver2/imageset/en/icon_contact_steam.gif" to="styles/subsilver2/imageset/en/icon_contact_steam.gif"/>
+			<file from="root/umil/*.*" to="umil/*.*"/>
+			<file from="root/steam_install.php" to="steam_install.php"/>
 		</copy>
-		<open src="styles/subsilver2/imageset/en/imageset.cfg">
+		<open src="styles/prosilver/template/memberlist_view.html">
 			<edit>
-				<find><![CDATA[img_icon_contact_msnm = icon_contact_msnm.gif]]></find>
-				<action type="after-add"><![CDATA[img_icon_contact_steam = icon_contact_steam.gif]]></action>
+				<find><![CDATA[			<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>]]></find>
+				<action type="replace-with"><![CDATA[			<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>]]></action>
 			</edit>
 		</open>
 		<open src="styles/subsilver2/template/memberlist_view.html">
 			<edit>
-				<find><![CDATA[	<!-- IF SIGNATURE -->]]></find>
-				<action type="before-add"><![CDATA[	<!-- IF STEAM -->
-		<tr>
-			<td class="cat" colspan="2" align="center"><h4>{L_STEAM}</h4></td>
-		</tr>
-		<tr>
-			<td class="row1" colspan="2">
-				<div class="postbody">
-					<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
-				</div>
-			</td>
-		</tr>
-	<!-- ENDIF -->]]></action>
+				<find><![CDATA[					<div class="steam" style="border-top:none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>]]></find>
+				<action type="replace-with"><![CDATA[					<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>]]></action>
 			</edit>
 		</open>
-		<open src="styles/subsilver2/template/ucp_profile_profile_info.html">
-			<edit>
-				<find><![CDATA[	<td class="row2"><input class="post" type="text" name="msn" size="30" maxlength="255" value="{MSN}" /></td>
-</tr>]]></find>
-				<action type="after-add"><![CDATA[<tr>
-	<td class="row1" width="35%"><b class="genmed">{L_STEAM}: </b><br /><span class="gensmall">{STEAM_EXPLAIN}</span></td>
-	<td class="row2"><input class="post" type="text" name="steam" size="30" maxlength="255" value="{STEAM}" /></td>
-</tr>]]></action>
-			</edit>
-		</open>
-		<open src="styles/subsilver2/template/viewtopic_body.html">
-			<edit>
-				<find><![CDATA[			<td><div class="gensmall" style="float: {S_CONTENT_FLOW_BEGIN};">&nbsp;<!-- IF postrow.U_POST_AUTHOR -->]]></find>
-				<inline-edit>
-					<inline-find><![CDATA[ <!-- IF postrow.U_EMAIL --><a href="{postrow.U_EMAIL}">{EMAIL_IMG}</a> <!-- ENDIF -->]]></inline-find>
-					<inline-action type="after-add"><![CDATA[ <!-- IF postrow.U_STEAM --><!-- IF postrow.STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{postrow.U_STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{postrow.U_STEAM}"><!-- ENDIF -->{STEAM_IMG}</a> <!-- ENDIF -->]]></inline-action>
-				</inline-edit>
-			</edit>
-		</open>
+		<php-installer><![CDATA[steam_install.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[Once the installer has been run you can delete the file.]]></diy-instructions>
 	</action-group>
 </mod>

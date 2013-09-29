@@ -3,7 +3,7 @@
 *
 * @author Prosk8er (Tyler) prosk8er@gotskillslounge.com
 * @package Steam Mod
-* @version $Id: steam_install.php 101 2012-10-27 13:30:30Z Prosk8er $
+* @version $Id: steam_install.php 102 2013-09-28 20:17:40Z Prosk8er $
 * @copyright (c) 2011 Prosk8er ( http://www.gotskillslounge.com/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -62,6 +62,9 @@ $versions = array(
 	),
 	// Version 1.0.1
 	'1.0.1' => array(
+	),
+	// Version 1.0.2
+	'1.0.2' => array(
 		'cache_purge' => array('', 'imageset', 'template', 'theme'),
 	),
 );
