@@ -1,0 +1,27 @@
+/* bidi.css */
+/* Former imageset */
+.rtl .imageset.icon_contact_steam {
+	padding-right: 20px;
+	padding-left: 0;
+}
+
+/* buttons.css */
+/* Profile & navigation icons */
+.steam-icon, .steam-icon a			{ background: none top left no-repeat; }
+/* Set profile icon dimensions */
+ul.profile-icons li.steam-icon	{ width: 20px; height: 20px; }
+
+/* colours.css */
+.steam a, .steam a:visited, .steam a:hover, .steam a:active {
+	background-color: transparent;
+}
+/* Profile & navigation icons */
+.steam-icon, .steam-icon a			{ background-image: url("./images/icon_contact_steam.gif"); }
+
+/* imageset.css */
+/* Global imageset items */
+.imageset.icon_contact_steam {
+	background-image: url("./images/icon_contact_steam.gif");
+	padding-left: 20px;
+	padding-top: 20px;
+}
