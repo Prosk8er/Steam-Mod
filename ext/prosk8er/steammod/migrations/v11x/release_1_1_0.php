@@ -7,7 +7,7 @@
 *
 */
 
-namespace prosk8er\steam_mod\migrations\v11x;
+namespace prosk8er\steammod\migrations\v11x;
 
 class release_1_1_0 extends \phpbb\db\migration\migration
 {
@@ -18,7 +18,7 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\prosk8er\steam_mod\migrations\v10x\release_1_0_2');
+		return array('\prosk8er\steammod\migrations\v10x\release_1_0_2');
 	}
 
 	public function update_data()
