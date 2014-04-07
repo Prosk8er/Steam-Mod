@@ -1,12 +1,14 @@
-	<!-- IF STEAM -->
-		<tr>
-			<td class="cat" colspan="2" align="center"><h4>{L_STEAM}</h4></td>
-		</tr>
-		<tr>
-			<td class="row1" colspan="2">
-				<div class="postbody">
-					<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
-				</div>
-			</td>
-		</tr>
-	<!-- ENDIF -->
+	<!-- BEGIN custom_fields -->
+		<!-- IF custom_fields.PROFILE_FIELD_IDENT eq 'phpbb_steam' -->
+			<tr>
+				<td class="cat" colspan="2" align="center"><h4>{L_STEAM}</h4></td>
+			</tr>
+			<tr>
+				<td class="row1" colspan="2">
+					<div class="postbody">
+						<div class="steam" style="border-top: none; margin-top: 0;"><!-- IF STEAM_IS_INT --><a href="http://steamcommunity.com/profiles/{STEAM}"><!-- ELSE --><a href="http://steamcommunity.com/id/{STEAM}"><!-- ENDIF --><img src="http://badges.steamprofile.com/profile/default/steam/{STEAM}.png" alt="" /></a></div>
+					</div>
+				</td>
+			</tr>
+		<!-- ENDIF -->
+	<!-- END custom_fields -->
