@@ -4,7 +4,7 @@
 // however you can override the default methods and add custom
 // installation logic
 
-namespace prosk8er\steammod;
+namespace prosk8er\steamcpf;
 
 class ext extends \phpbb\extension\base
 {

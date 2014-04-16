@@ -7,7 +7,7 @@
 *
 */
 
-namespace prosk8er\steammod\migrations\v10x;
+namespace prosk8er\steamcpf\migrations\v10x;
 
 class release_1_0_0 extends \phpbb\db\migration\migration
 {
