@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Users that have entered in there Steam account will see a small image on the viewtopic page and when clicked on will take a user to the members Steam Profile also in the profile page above the signature but the image will be bigger.",
 	"homepage": "https://github.com/Prosk8er/Steam-Mod",
-	"version": "1.1.0",
+	"version": "1.0.0",
 	"time": "2013-03-16",
 	"license": "GPL-2.0",
 	"authors": [

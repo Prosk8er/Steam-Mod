@@ -13,7 +13,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['steam_mod_version']) && version_compare($this->config['steam_mod_version'], '1.0.0', '>=');
+		return isset($this->config['steam_cpf_version']) && version_compare($this->config['steam_cpf_version'], '1.0.0', '>=');
 	}
 
 	static public function depends_on()
@@ -30,7 +30,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				),
 			),
 
-			array('config.add', array('steam_mod_version', '1.0.0')),
+			array('config.add', array('steam_cpf_version', '1.0.0')),
 		);
 	}
 }
