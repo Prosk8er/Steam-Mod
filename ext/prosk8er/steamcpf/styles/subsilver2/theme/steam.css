@@ -1,0 +1,7 @@
+/* stylesheet.css */
+/* EN Language Pack */
+.imageset.phpbb_steam-icon, .imageset.icon_contact_steam {
+	background-image: url("./en/icon_contact_steam.gif");
+	padding-left: 72px;
+	padding-top: 20px;
+}
