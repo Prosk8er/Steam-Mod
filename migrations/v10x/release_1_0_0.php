@@ -22,7 +22,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		return array('\phpbb\db\migration\data\v310\dev');
 	}
 
-	public function update_data()
+	public function update_schema()
 	{
 		return array(
 			'add_columns' => array(
@@ -30,8 +30,31 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					'user_steam' => array('VCHAR', ''),
 				),
 			),
+		);
+	}
 
+	public function update_data()
+	{
+		return array(
 			array('config.add', array('steam_mod_version', '1.0.0')),
+		);
+	}
+
+	public function revert_data()
+	{
+		return array(
+			array('config.remove', array('steam_mod_version')),
+		);
+	}
+
+	public function revert_schema()
+	{
+		return array(
+			'drop_columns'	=> array(
+				$this->table_prefix . 'users'			=> array(
+					'user_steam',
+				),
+			),
 		);
 	}
 }

@@ -29,4 +29,11 @@ class release_1_1_0 extends \phpbb\db\migration\migration
 			array('config.remove', array('steam_mod_version', '1.0.2')),
 		);
 	}
+
+	public function revert_data()
+	{
+		return array(
+			array('config.remove', array('steam_cpf_version')),
+		);
+	}
 }
