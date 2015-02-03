@@ -21,7 +21,7 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.user_setup'					=> 'load_language_on_setup',
-			'core.memberlist_view_profile'		=> 'memberlist_view_profile',
+			//'core.memberlist_view_profile'		=> 'memberlist_view_profile',
 			'core.viewtopic_modify_post_row'	=> 'viewtopic_modify_post_row',
 			'core.ucp_pm_view_messsage'			=> 'ucp_pm_view_messsage',
 		);
@@ -37,17 +37,17 @@ class listener implements EventSubscriberInterface
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
-	public function memberlist_view_profile($event)
-	{
-		$profile_fields = array();
-		if ($config['load_cpf_viewprofile'])
-		{
-			$cp = $phpbb_container->get('profilefields.manager');
-			$profile_fields = $cp->grab_profile_fields_data($user_id);
-			'STEAM_IS_INT'	=> (!empty($profile_fields['pf_phpbb_steam']) && is_numeric($profile_fields['pf_phpbb_steam'])) ? true : false,);
-		{
-		$vars = array('profile_fields',);
-	}
+	//public function memberlist_view_profile($event)
+	//{
+		//$profile_fields = array();
+		//if ($config['load_cpf_viewprofile'])
+		//{
+			//$cp = $phpbb_container->get('profilefields.manager');
+			//$profile_fields = $cp->grab_profile_fields_data($user_id);
+			//'STEAM_IS_INT'	=> (!empty($profile_fields['pf_phpbb_steam']) && is_numeric($profile_fields['pf_phpbb_steam'])) ? true : false,);
+		//{
+		//$vars = array('profile_fields',);
+	//}
 
 	public function viewtopic_modify_post_row($event)
 	{
@@ -55,7 +55,7 @@ class listener implements EventSubscriberInterface
 		$post_row = $event['post_row'];
 
 		$post_row = array_merge($post_row, array(
-			'STEAM_IS_INT'			=> (!empty($cp_row['pf_phpbb_steam']) && is_numeric($cp_row['pf_phpbb_steam'])) ? true : false,);
+			'STEAM_IS_INT'			=> (!empty($cp_row['pf_phpbb_steam']) && is_numeric($cp_row['pf_phpbb_steam'])) ? true : false,
 		));
 
 		$event['post_row'] = $post_row;
